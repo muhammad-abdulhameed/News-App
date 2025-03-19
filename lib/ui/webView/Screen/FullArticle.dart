@@ -17,7 +17,7 @@ class _FullArticleState extends State<FullArticle> {
   late String uri;
   late WebViewController webViewController;
   bool isWebInt = false;
-var loadingProgress;
+var loadingProgress=0;
   @override
   void initState() {
     // TODO: implement initState
@@ -25,13 +25,13 @@ var loadingProgress;
 
     ///to make sure controller init one time
     webViewController = WebViewController();
-    webViewController.setNavigationDelegate(
+    /*webViewController.setNavigationDelegate(
       NavigationDelegate(
         onPageStarted:(url) =>loadingProgress=0 ,
         onProgress: (progress) => loadingProgress=progress,
         onPageFinished:(url) =>  loadingProgress=100
       )
-    );
+    );*/
   }
 
   @override
@@ -55,8 +55,8 @@ var loadingProgress;
       body: SafeArea(
           child: Column(
             children: [
-              if(loadingProgress<100)
-              LinearProgressIndicator(value: loadingProgress/100,color: Colors.red,),
+              /*if(loadingProgress<100)
+              LinearProgressIndicator(value: loadingProgress/10 ,color: Colors.red,),*/
               Expanded(
                 child: WebViewWidget(
         controller: webViewController,
