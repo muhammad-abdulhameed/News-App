@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -58,7 +59,7 @@ late  WebViewController webViewController;
                       child: CachedNetworkImage(
                           errorWidget: (context, url, error) => Text(
                                 error.toString(),
-                              ),
+                              ).tr(),
                           progressIndicatorBuilder: (context, url, progress) =>
                               CircularProgressIndicator(
                                 color: Colors.red,
@@ -75,7 +76,7 @@ late  WebViewController webViewController;
                      /* "40-year-old man falls 200 feet to his death while canyoneering at national park40-year-old man falls 200 feet to his death while canyoneering at national park40-year-old man falls 200 feet to his death while canyoneering at national park"*/,
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                           color: Theme.of(context).colorScheme.primary),
-                    ),
+                    ).tr(),
                     SizedBox(
                       height: 10.h,
                     ),
@@ -89,7 +90,7 @@ late  WebViewController webViewController;
                         child: Text(
                           StringManger.viewFulArticles,
                           style: Theme.of(context).textTheme.bodyLarge,
-                        ))
+                        ).tr())
                   ],
                 )));
       },
@@ -107,7 +108,7 @@ late  WebViewController webViewController;
               child: CachedNetworkImage(
                   errorWidget: (context, url, error) => Text(
                         error.toString(),
-                      ),
+                      ).tr(),
                   progressIndicatorBuilder: (context, url, progress) =>
                       CircularProgressIndicator(
                         color: Colors.red,
@@ -123,7 +124,7 @@ late  WebViewController webViewController;
               widget.articles.content??""
               /*"40-year-old man falls 200 feet to his death while canyoneering at national park"*/,
               style: Theme.of(context).textTheme.bodyMedium,
-            ),
+            ).tr(),
             SizedBox(
               height: 10.h,
             ),
@@ -135,14 +136,14 @@ late  WebViewController webViewController;
                     widget.articles.author??"",
                     maxLines: 2,
                     style: Theme.of(context).textTheme.bodySmall
-                  ),
+                  ).tr(),
                 ),
                 Flexible(
                   child: Text(
                     timeago
                         .format(DateTime.parse(widget.articles.publishedAt??'')),
                     style: Theme.of(context).textTheme.bodySmall,
-                  ),
+                  ).tr(),
                 )
               ],
             )

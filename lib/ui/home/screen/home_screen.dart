@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:news_app/core/mangers/colorsManger.dart';
@@ -33,7 +34,7 @@ CategoryModel ?categoryModel;
           });
         },),
         appBar: AppBar(
-          title: Text(categoryModel?.categoryName??StringManger.home),
+          title: Text(categoryModel?.categoryName??StringManger.home).tr(),
           actions: [
             IconButton(onPressed: (){
               Navigator.pushNamed(context, SearchScreen.routeName);

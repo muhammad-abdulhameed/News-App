@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:news_app/core/Di/di.dart';
 import 'package:news_app/core/Remote/ApiHandler.dart';
 import 'package:news_app/core/mangers/colorsManger.dart';
 import 'package:news_app/ui/NewsList/widget/Articales_ViewModel.dart';
 import 'package:news_app/ui/NewsList/widget/ArticleItem.dart';
 
 import '../../../models/ArticlesResponse/ArticleResponse.dart';
-import '../../../models/SourcesResponse/Sources.dart';
+import '../../../Data/Models/SourcesResponse/Sources.dart';
 
 class  ArticleList extends StatefulWidget {
 
@@ -21,7 +22,7 @@ Source source;
 class _ArticleListState extends State<ArticleList> {
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(create:(context) =>  ArticlesViewModel()..getArticles(widget.source.id??""),
+    return BlocProvider(create:(context) =>  getIt.get<ArticlesViewModel>()..getArticles(widget.source.id??""),
       child: BlocBuilder<ArticlesViewModel,NewsState>(builder: (context, state) {
         if(state is LoadingState){
           return Center(child: CircularProgressIndicator(color: ColorManger.tertiary,));

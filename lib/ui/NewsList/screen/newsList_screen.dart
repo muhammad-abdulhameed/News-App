@@ -1,18 +1,43 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:news_app/core/Remote/ApiHandler.dart';
+import 'package:news_app/core/Di/di.dart';
 import 'package:news_app/models/categoryModel.dart';
 import 'package:news_app/ui/NewsList/screen/newsList_viewModel.dart';
 import 'package:news_app/ui/NewsList/widget/ArticalesList.dart';
 import 'package:provider/provider.dart';
 
-class NewsScreen extends StatelessWidget {
+class NewsScreen extends StatefulWidget {
   NewsScreen({super.key ,required this.categoryModel});
-CategoryModel ?categoryModel;
-
+final CategoryModel ?categoryModel;
 
   @override
+  State<NewsScreen> createState() => _NewsScreenState();
+}
+
+
+class _NewsScreenState extends State<NewsScreen> {
+ late String local;
+late NewsListViewModel _viewModel;
+@override
+  void initState() {
+  _viewModel = getIt.get<NewsListViewModel>();
+    super.initState();
+  }
+  @override
+  void didChangeDependencies() {
+
+    super.didChangeDependencies();
+
+   local= context.locale.languageCode;
+
+    _viewModel.getResources(widget.categoryModel?.id ?? "", local);///this step to re request api when local change cause
+///did dep is recall when dependency change (locale)the make new request with new locale
+  }
+  @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(create:(context) =>  NewsListViewModel()..getResources(categoryModel?.id??""),
+    ///value constructor make you use exist obj inherit from change notifier (we already init it in initState )
+    return ChangeNotifierProvider<NewsListViewModel>.value(/*create:(context) =>  getIt.get<NewsListViewModel>()..getResources(widget.categoryModel?.id??"",local),*/
+      value: _viewModel,
       child: Consumer<NewsListViewModel>(builder: (context, value, child) {
         if(value.isLoading){
           return const Center(child: CircularProgressIndicator(color: Colors.grey,));
@@ -31,7 +56,7 @@ CategoryModel ?categoryModel;
                     unselectedLabelStyle: TextStyle(fontSize: 14,color: Colors.black),
                     labelStyle: Theme.of(context).textTheme.bodyMedium,
                     indicatorColor: Theme.of(context).colorScheme.onPrimary,labelColor: Colors.black,
-                    tabs: value.sources!.map((sources) => Tab(text: sources.name)).toList(),
+                    tabs: value.sources!.map((sources) => Tab(text: sources?.name)).toList(),
                   ),
                   Expanded(
                       child: TabBarView(

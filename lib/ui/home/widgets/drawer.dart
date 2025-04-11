@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -7,6 +8,8 @@ import 'package:news_app/core/mangers/stringsManger.dart';
 import 'package:news_app/core/providers/themeProvider.dart';
 import 'package:provider/provider.dart';
 
+import '../../../core/providers/themeProvider.dart';
+
 class AppDrawer extends StatefulWidget {
    AppDrawer({required this.onTapHome});
 Function onTapHome;
@@ -15,9 +18,16 @@ Function onTapHome;
 }
 
 class _AppDrawerState extends State<AppDrawer> {
-String selectedTheme="";
+late String selectedTheme='';
 
 String selectedLang="";
+@override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+    context.locale.languageCode=="ar"?selectedLang=StringManger.arabic:selectedLang=StringManger.english;
+    context.read<ThemeProvider>().themeMode==ThemeMode.light?selectedTheme=StringManger.light:selectedTheme=StringManger.dark;
+}
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +45,7 @@ String selectedLang="";
               child: Text(
                 StringManger.news,
                 style: Theme.of(context).textTheme.bodyLarge,
-              ),
+              ).tr(),
             ),
             SizedBox(
               height: 24.h,
@@ -64,7 +74,7 @@ widget.onTapHome();
                         Text(
                           StringManger.gotoHome,
                           style: Theme.of(context).textTheme.titleLarge,
-                        )
+                        ).tr()
                       ],
                     ),
                   ),
@@ -94,7 +104,7 @@ widget.onTapHome();
                       Text(
                         StringManger.theme,
                         style: Theme.of(context).textTheme.titleLarge,
-                      )
+                      ).tr()
                     ],
                   ),
                   SizedBox(height: 8.h,),
@@ -108,24 +118,24 @@ widget.onTapHome();
                       child: DropdownButton<String>(iconEnabledColor: Theme.of(context).colorScheme.primary,
                           isExpanded: true,dropdownColor: Theme.of(context).colorScheme.primary,
                           borderRadius: BorderRadius.circular(16.r),
-                          hint: Text(selectedTheme,style: Theme.of(context).textTheme.titleLarge,),
+                          hint: Text(selectedTheme,style: Theme.of(context).textTheme.titleLarge,).tr(),
                           padding: REdgeInsets.all(5),
                           items: [
                         DropdownMenuItem(
-                          child: Text("Light"),
+                          child: Text(StringManger.light).tr(),
                           value: "li",
                         ),
                         DropdownMenuItem(
-                          child: Text("Dark"),
+                          child: Text(StringManger.dark).tr(),
                           value: "Dr",
                         )
                       ], onChanged: (item) {
                             setState(() {
                               if(item=="li"){
-                                selectedTheme=StringManger.light;
+                                selectedTheme=StringManger.light.tr();
                                 themeProvider.changeTheme(ThemeMode.light);
                               }else{
-                                selectedTheme=StringManger.dark;
+                                selectedTheme=StringManger.dark.tr();
                                 themeProvider.changeTheme(ThemeMode.dark);
                               }
                             });
@@ -158,7 +168,7 @@ widget.onTapHome();
                       Text(
                         StringManger.language,
                         style: Theme.of(context).textTheme.titleLarge,
-                      )
+                      ).tr()
                     ],
                   ),
                   SizedBox(height: 8.h,),
@@ -172,22 +182,24 @@ widget.onTapHome();
                       child: DropdownButton<String>(iconEnabledColor: Theme.of(context).colorScheme.primary,
                           isExpanded: true,dropdownColor: Theme.of(context).colorScheme.primary,
                           borderRadius: BorderRadius.circular(16.r),
-                          hint: Text(selectedLang,style: Theme.of(context).textTheme.titleLarge,),
+                          hint: Text(selectedLang,style: Theme.of(context).textTheme.titleLarge,).tr(),
                           padding: REdgeInsets.all(5),
                           items: [
                             DropdownMenuItem(
-                              child: Text(StringManger.english),
+                              child: Text(StringManger.english).tr(),
                               value: "en",
                             ),
                             DropdownMenuItem(
-                              child: Text(StringManger.arabic),
+                              child: Text(StringManger.arabic).tr(),
                               value: "ar",
                             )
                           ], onChanged: (lang) {
                         setState(() {
                           if(lang=="ar"){
+                           context.setLocale(Locale("ar"));
                             selectedLang=StringManger.arabic;
                           }else{
+                            context.setLocale(Locale("en"));
                             selectedLang=StringManger.english;
                           }
                         });

@@ -1,4 +1,4 @@
-import '../SourcesResponse/Sources.dart';
+import '../../../Data/Models/SourcesResponse/Sources.dart';
 
 
 class Article {

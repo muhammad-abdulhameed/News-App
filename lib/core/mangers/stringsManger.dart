@@ -1,24 +1,24 @@
 abstract class StringManger{
-  static String home="Home";
-  static String news="News";
-  static String gotoHome="Go to Home";
-  static String theme="Theme";
-  static String language="Language";
-  static String arabic="العربية";
-  static String english="English";
-  static String light="Light";
-  static String dark="Dark";
-  static String general="General";
-  static String business="Business";
-  static String sport="Sport";
-  static String entertainment="Entertainment";
-  static String science="Science";
-  static String technology="Technology";
-  static String health="Health";
-  static String welcomeText="""Good Morning 
-Here is Some News For You""";
-  static String viewAll="View All";
-  static String viewFulArticles="View Full Articles";
-  static String search="Search";
+  static String home = "home";
+  static String news = "news";
+  static String gotoHome = "goto_home";
+  static String theme = "theme";
+  static String language = "language";
+  static String arabic = "العربية";  // Arabic remains unchanged
+  static String english = "english";
+  static String light = "light";
+  static String dark = "dark";
+  static String general = "general";
+  static String business = "business";
+  static String sport = "sport";
+  static String entertainment = "entertainment";
+  static String science = "science";
+  static String technology = "technology";
+  static String health = "health";
+  static String welcomeText = """good morning 
+here is some news for you""";
+  static String viewAll = "view all";
+  static String viewFulArticles = "view full articles";
+  static String search = "search";
 
 }

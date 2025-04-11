@@ -1,17 +1,19 @@
 import 'dart:convert';
 
+import 'package:injectable/injectable.dart';
 import 'package:news_app/core/ApiConstants.dart';
 import 'package:http/http.dart' as http;
 import 'package:news_app/models/ArticlesResponse/ArticleResponse.dart';
-import 'package:news_app/models/SourcesResponse/SourceResponse.dart';
-
+import 'package:news_app/Data/Models/SourcesResponse/SourceResponse.dart';
+@singleton
 class ApiManger {
-  static Future<SourceResponse?> getResources(String category) async {
+   Future<SourceResponse> getResources(String category,lang) async {
     ///we create function that's have body of response(json)
-    try{
+
     var url = Uri.https(baseUrl, "/v2/top-headlines/sources", {
       ///this constractor arrange your request link as domain / endPoint/q parameters
-      "category": category
+      "category": category,
+      "language":lang
     });
     var response = await http.get(url, headers: {
       ///this's function that's make your request (trigger api to get response)Note:you can pass header with
@@ -25,11 +27,9 @@ class ApiManger {
     print(sourceResponse);
 
     return sourceResponse;
-  }catch(e){
-     return null;
-    }
+
   }
- static Future<ArticleResponse> getArticle(String source)async{
+  Future<ArticleResponse> getArticle(String source)async{
    var url= Uri.http(baseUrl,"/v2/top-headlines",{
       "sources":source
     });
@@ -40,7 +40,7 @@ class ApiManger {
 ArticleResponse articleResponse=ArticleResponse.fromJson(json);
 return articleResponse;
   }
-  static Future<ArticleResponse> searchForArticle(query)async{
+   Future<ArticleResponse> searchForArticle(query)async{
     var url= Uri.http(baseUrl,"/v2/everything",{
       "q":query
     });
